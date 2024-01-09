@@ -10,5 +10,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Express.js backend is listening on port ${port}`);
 });
-
-module.exports = app;
