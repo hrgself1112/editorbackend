@@ -5,7 +5,7 @@ const port = 7800
 const app = express()
 
 
-app.get("/" , (req ,res)=>{
+app.get("/api/ok" , (req ,res)=>{
 res.send("hii")    
 })
 
