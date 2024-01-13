@@ -1,16 +1,13 @@
 
 const cors = require('cors');
-const fs = require('fs');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 require("dotenv").config()
 const registerRouter = require("./routes/resiter");
-const { default: mongoose } = require('mongoose');
 const bymongoose = require('./db-connectors/bymonngoose');
 const port = process.env.PORT
 
-// dbConnect().catch(console.dir);
 bymongoose()
 
 

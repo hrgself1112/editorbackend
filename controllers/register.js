@@ -15,12 +15,13 @@ const GetRegisterArticle = async (req, res) => {
 const PostArticleRegister = async (req, res) => {
     try {
         const {title}  = req.body
+        console.log(req.body);
        
     const newUser = new ArticleRegistrationsModel({
-     title:title
+     title
       });
   
-      // Save the user to the database
+      // Save the user to the Rdatabase
       await newUser.save();
   
       res.status(201).json({ message: 'User registered successfully' });
@@ -29,7 +30,6 @@ const PostArticleRegister = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' }); 
          
     }
-    // res.send(req.body)
 }
 
 module.exports = {
