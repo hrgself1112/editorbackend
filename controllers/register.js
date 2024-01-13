@@ -13,12 +13,29 @@ const GetRegisterArticle = async (req, res) => {
 
 
 const PostArticleRegister = async (req, res) => {
+    console.log(req.body);
     try {
-        const {title}  = req.body
-        console.log(req.body);
+        const {title,description,keywords,url,h1,content,imageurl,imagealt,path,faq,faqlasttext,if_not_lang,processedContentNAMP,processedContentAMP,processedFaqNAMP,processedFaqAMP,AuthorProfile,schemaProfile}  = req.body
        
     const newUser = new ArticleRegistrationsModel({
-     title
+                title:title,
+                description:description,
+                keywords:keywords,
+                url:url,
+                h1:h1,
+                content:content,
+                imageurl:imageurl,
+                imagealt:imagealt,
+                path:path,
+                faq:faq,
+                faqlasttext:faqlasttext,
+                if_not_lang:if_not_lang,
+                processedContentNAMP:processedContentNAMP,
+                processedContentAMP:processedContentAMP,
+                processedFaqNAMP:processedFaqNAMP,
+                processedFaqAMP:processedFaqAMP,
+                AuthorProfile:AuthorProfile,
+                schemaProfil:schemaProfile
       });
   
       // Save the user to the Rdatabase
