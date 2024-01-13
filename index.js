@@ -1,41 +1,37 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const app = require('express')();
+const cors = require('cors');
+const fs = require('fs');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 require("dotenv").config()
-
+const registerRouter = require("./routes/resiter");
+const { default: mongoose } = require('mongoose');
+const bymongoose = require('./db-connectors/bymonngoose');
 const port = process.env.PORT
-const registerRouter = require("./routes/resiter")
 
-const client = new MongoClient(process.env.DBURL, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
- async function dbConnect() {
+// dbConnect().catch(console.dir);
+bymongoose()
 
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-dbConnect().catch(console.dir);
+
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' })); // Set your desired payload size limit
+app.use(cors());
+app.use("/register", registerRouter)
 
 
 
-app.use("/register" , registerRouter)
 
 
-app.get("/" , (req ,res )=>{
+
+
+app.get("/", (req, res) => {
   res.send("you are in homepage")
 })
+
+
+
 
 app.listen(port, () => {
   console.log(`Express.js backend is listening on port ${port}`);

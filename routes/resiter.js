@@ -1,11 +1,11 @@
 const express = require("express")
 const router = express.Router()
 
-const { GetRegisterArticle, ArticleRegister } = require("../controllers/register")
+const { GetRegisterArticle, PostArticleRegister } = require("../controllers/register")
 
 
 
 router.get("/" ,  GetRegisterArticle)
-router.post("/" ,  ArticleRegister)
+router.post("/" ,  PostArticleRegister)
 
-  module.exports = router
+module.exports = router

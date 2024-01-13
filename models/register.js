@@ -1,8 +1,6 @@
-const mongoose = require("mongoose")
-const ArticleRegistrationsSchema = require("../schemas/articles")
+const { mongoose } = require("mongoose");
+const { ArticleSchema } = require("../schemas/articles")
 
-const ArticleRegistrationsModel = require("Articles"  , ArticleRegistrationsSchema)
+const ArticleRegistrationsModel = mongoose.model("Article"  , ArticleSchema)
 
-module.exports = {
-    ArticleRegistrationsModel
-}
+module.exports =     ArticleRegistrationsModel
