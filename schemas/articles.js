@@ -19,8 +19,8 @@ const ArticleSchema = mongoose.Schema({
   processedContentAMP: { type: String },
   processedFaqNAMP: { type: String },
   processedFaqAMP: { type: String },
-  AuthorProfile: { type: String },
-  schemaProfile: { type: String }
+  AuthorProfile: { type: Object },
+  schemaProfile: { type: Object }
 });
 
 
