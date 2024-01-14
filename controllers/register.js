@@ -50,7 +50,7 @@ const PostArticleRegister = async (req, res) => {
               const href = i === 0 ? '/' : `/${array1.slice(0, i).join('/')}`;
               const currentTitle = array2[i];
       
-              resultHTML.push(`<a href="${href}" title="${currentTitle}" class="${className}">${currentTitle}</a> ${i < array2.length - 1 ? '&#187;' : ''}`);
+              resultHTML.push(`<a href="${href}" title="${currentTitle}" class="${className}">${currentTitle}</a> ${i < array2.length - 1 ? `&#187;` : ''}`);
           }
       
           // Add the title breadcrumb without '&#187;' at the end
