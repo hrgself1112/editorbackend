@@ -13,9 +13,9 @@ const GetRegisterArticle = async (req, res) => {
 }
 
 const GetRegisterArticlebyID = async (req, res) => {
-    const id = "65a2bc6ff24bfb9dbe196fcd";
+    
     try {
-        const user = await ArticleRegistrationsModel.findById(id);
+        const user = await ArticleRegistrationsModel.findById(req.params.id);
         if (user) {
             res.json(user);
         } else {
