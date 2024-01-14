@@ -87,68 +87,70 @@ const DeleteRegisterArticlesByID = async (req, res) => {
 const DownloadRegisterArticlesByID = async (req, res) => {
   
 
-    console.log(req.params.id)
-    try {
-        const user = await ArticleRegistrationsModel.findById(req.params.id);
-        if (user) {
-            res.json(user);
-        } else {
-            res.status(404).json({ message: 'User not found' });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
+    // console.log(req.params.id)
+    // try {
+    //     const user = await ArticleRegistrationsModel.findById(req.params.id);
+    //     if (user) {
+    //         res.json(user);
+    //     } else {
+    //         res.status(404).json({ message: 'User not found' });
+    //     }
+    // } catch (error) {
+    //     console.error(error);
+    //     res.status(500).json({ error: 'Internal server error' });
+    // }
+
 //     const ids  = req.params.id.split(",")
 
 // console.log(ids);
 // console.log(req.params);
-//   const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids } });
 
-//   const outputDirectory = path.join(__dirname, 'generatedFiles');
-//   const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
+  const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: req.params.id } });
 
-//   if (!fs.existsSync(outputDirectory)) {
-//     fs.mkdirSync(outputDirectory, { recursive: true });
-//   }
+  const outputDirectory = path.join(__dirname, 'generatedFiles');
+  const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
 
-//   if (!fs.existsSync(outputDirectoryAMP)) {
-//     fs.mkdirSync(outputDirectoryAMP, { recursive: true });
-//   }
+  if (!fs.existsSync(outputDirectory)) {
+    fs.mkdirSync(outputDirectory, { recursive: true });
+  }
 
-//   const archive = archiver('zip', {
-//     zlib: { level: 9 }
-//   });
+  if (!fs.existsSync(outputDirectoryAMP)) {
+    fs.mkdirSync(outputDirectoryAMP, { recursive: true });
+  }
 
-//   archive.on('error', (err) => {
-//     res.status(500).send({ error: err.message });
-//   });
+  const archive = archiver('zip', {
+    zlib: { level: 9 }
+  });
 
-//   res.attachment('generatedFiles.zip');
-//   archive.pipe(res);
+  archive.on('error', (err) => {
+    res.status(500).send({ error: err.message });
+  });
 
-//   for (let i = 0; i < jsonData.length; i++) {
+  res.attachment('generatedFiles.zip');
+  archive.pipe(res);
 
-//     const data = jsonData[i];
+  for (let i = 0; i < jsonData.length; i++) {
+
+    const data = jsonData[i];
     
-//     console.log(data)
+    console.log(data)
     
-//     const filename = data.url.replace(/[^\w\s.-]/gi, '');
+    const filename = data.url.replace(/[^\w\s.-]/gi, '');
 
-//     // Render the EJS template with data
-//     const renderedHTML = await ejs.renderFile(path.join(__dirname, '../views/creation/template.ejs'), data);
-//     const renderedHTMLAMP = await ejs.renderFile(path.join(__dirname, '../views/creation/amptemplate.ejs'), data);
+    // Render the EJS template with data
+    const renderedHTML = await ejs.renderFile(path.join(__dirname, '../views/creation/template.ejs'), data);
+    const renderedHTMLAMP = await ejs.renderFile(path.join(__dirname, '../views/creation/amptemplate.ejs'), data);
 
-//     // Write the rendered HTML content to ASP files with the correct extension
-//     fs.writeFileSync(path.join(outputDirectory, `${filename}.asp`), renderedHTML);
-//     fs.writeFileSync(path.join(outputDirectoryAMP, `${filename}.asp`), renderedHTMLAMP);
+    // Write the rendered HTML content to ASP files with the correct extension
+    fs.writeFileSync(path.join(outputDirectory, `${filename}.asp`), renderedHTML);
+    fs.writeFileSync(path.join(outputDirectoryAMP, `${filename}.asp`), renderedHTMLAMP);
 
-//     // Add ASP files to the ZIP archive
-//     archive.file(path.join(outputDirectory, `${filename}.asp`), { name: `generatedFiles/${filename}` });
-//     archive.file(path.join(outputDirectoryAMP, `${filename}.asp`), { name: `generatedFiles/amp/${filename}` });
-//   }
+    // Add ASP files to the ZIP archive
+    archive.file(path.join(outputDirectory, `${filename}.asp`), { name: `generatedFiles/${filename}` });
+    archive.file(path.join(outputDirectoryAMP, `${filename}.asp`), { name: `generatedFiles/amp/${filename}` });
+  }
 
-//   archive.finalize();
+  archive.finalize();
 };
 
 
