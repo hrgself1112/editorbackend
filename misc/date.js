@@ -46,6 +46,11 @@ const getCurrentFormattedNumberDate = () => {
     return `${amOrPm}`;
   };
   
+// console.log(getCurrentFormattedNumberDate());
+// console.log(getCurrentFormattedDate());
+// console.log(getCurrentFormattedTime());
+// console.log(getamOrpm());
+
   module.exports = {
     getCurrentFormattedDate,
     getCurrentFormattedTime,

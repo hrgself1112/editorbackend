@@ -20,7 +20,10 @@ const ArticleSchema = mongoose.Schema({
   processedFaqNAMP: { type: String },
   processedFaqAMP: { type: String },
   AuthorProfile: { type: Object },
-  schemaProfile: { type: Object }
+  schemaProfile: { type: Object },
+  TimeRanges: { type: Object },
+  ResLineOne: { type: String },
+  Ressession: { type: String }
 });
 
 

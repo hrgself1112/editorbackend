@@ -6,7 +6,8 @@ const fs  = require("fs")
 const archiver = require("archiver")
 
 const ejs = require('ejs');
-const ArticleRegistrationsModel = require("../models/register")
+const ArticleRegistrationsModel = require("../models/register");
+const { getCurrentFormattedNumberDate, getCurrentFormattedDate, getCurrentFormattedTime, getamOrpm } = require('../misc/date');
 
 const GetRegisterArticle = async (req, res) => {
     const users = await ArticleRegistrationsModel.find()
@@ -29,9 +30,20 @@ const GetRegisterArticlebyID = async (req, res) => {
 }
 
 const PostArticleRegister = async (req, res) => {
-    console.log(req.body);
+
     try {
-        const { title, description, keywords, url, h1, content, imageurl, imagealt, path, faq, faqlasttext, if_not_lang, processedContentNAMP, processedContentAMP, processedFaqNAMP, processedFaqAMP, AuthorProfile, schemaProfile } = req.body
+      const { title, description, keywords, url, h1, content, imageurl, imagealt, path, faq, faqlasttext, if_not_lang, processedContentNAMP, processedContentAMP, processedFaqNAMP, processedFaqAMP, AuthorProfile, schemaProfile } = req.body
+      
+
+      const ResLineOne = `<% Response.Charset="utf-8" %>`
+      const Ressession = `<% session("topmenulink")="horoscope" %>`
+
+      const getCurrentFormattedNumberDate = getCurrentFormattedNumberDate()
+      const getCurrentFormattedDate = getCurrentFormattedDate()
+      const getCurrentFormattedTime = getCurrentFormattedTime()
+      const getamOrpm = getamOrpm()
+      
+
 
         const newUser = new ArticleRegistrationsModel({
             title: title,
@@ -51,11 +63,16 @@ const PostArticleRegister = async (req, res) => {
             processedFaqNAMP: processedFaqNAMP,
             processedFaqAMP: processedFaqAMP,
             AuthorProfile: AuthorProfile,
-            schemaProfil: schemaProfile
+            schemaProfile: schemaProfile,
+
+            ResLineOne:ResLineOne,
+            Ressession:Ressession, 
+            TimeRanges:{getCurrentFormattedNumberDate,getCurrentFormattedDate,getCurrentFormattedTime,getamOrpm}
+
         });
 
 
-        
+
         // Save the user to the Rdatabase
         await newUser.save();
 
