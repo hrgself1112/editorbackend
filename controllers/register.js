@@ -105,7 +105,7 @@ const DownloadRegisterArticlesByID = async (req, res) => {
 // console.log(ids);
 // console.log(req.params);
 
-  const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: req.params.id } });
+  const jsonData = await ArticleRegistrationsModel.findById(req.params.id)
 
   const outputDirectory = path.join(__dirname, 'generatedFiles');
   const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
