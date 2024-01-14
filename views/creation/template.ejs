@@ -13,11 +13,11 @@
     "@context":"https://schema.org",
     "@type":"NewsArticle",
     "mainEntityOfPage":{"@type":"WebPage",
-    "@id":"https://www.astrosage.com/<%= whichYear%>/<%= url%>"},
-    "url":"https://www.astrosage.com/<%= whichYear%>/<%= url%>",
+    "@id":"https://www.astrosage.com/<%= newerPath%>/<%= url%>"},
+    "url":"https://www.astrosage.com/<%= newerPath%>/<%= url%>",
     "headline":"<%= title %>",
-    "datePublished":"<%= FormattedNumberDate %>T<%= formattedTime%>+05:30",
-    "dateModified":"<%= FormattedNumberDate %>T<%= formattedTime%>+05:30",
+    "datePublished":"<%= TimeRanges.getCurrentFormattedNumberDate %>T<%= TimeRanges.getCurrentFormattedTime%>+05:30",
+    "dateModified":"<%= TimeRanges.getCurrentFormattedNumberDate %>T<%= TimeRanges.getCurrentFormattedTime%>+05:30",
     "publisher":{"@type":"Organization",
     "@id":"https://www.astrosage.com",
     "name":"AstroSage",
@@ -25,15 +25,15 @@
     "url":"https://www.astrosage.com/images/logo-lg.png",
     "width":200,"height":60}},
     "image":{"@type":"ImageObject",
-    "url":"https://www.astrosage.com/<%= whichYear%>/images/<%= conditonalSchemaImage%>",
+    "url":"https://www.astrosage.com/<%= newerPath%>/images/",
     "width":1280,"height":720},
     "articleSection":"<%= title %>",
     "description":"<%= description %>",
     "author":{"@type":"Person",
-    "name":"<%= profilename%>",
-    "url":"<%= profileUrl%>",
+    "name":"<%= AuthorProfile.profilename%>",
+    "url":"<%= AuthorProfile.profileUrl%>",
     "image":{"@type":"ImageObject",
-    "url":"<%= profileImageUrl%>",
+    "url":"<%= AuthorProfile.profileImageUrl%>",
     "height":120,"width":120},
     "sameAs":["https://www.astrosage.com"]
     }
@@ -48,8 +48,7 @@
         <div id="roundtopheadid">
             <div class="roundtophead">
                 <div class="AscTopHead" style="text-align: left;">
-                    <a href="/" title="Home" class="BreadCrumb">Home</a> &#187; <a href="/<%= whichYear%>/" class="BreadCrumb">
-                        <%= whichYear%> </a>&#187; <a href="#" class="BreadCrumb"><%= h1%></a>
+                        <%= BreadCrumbs%> 
                 </div>
             </div>
         </div>
@@ -58,16 +57,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="author-date text-right">
-                        <span>Author: <a href="<%= profileUrl%>"><%= profilename%></a></span>
-                        | <span>Updated <%= formattedDate%> <%= formattedTime%> <%= amOrpm%> IST </span>
+                        <span>Author: <a href="<%= AuthorProfile.profileUrl%>"><%= AuthorProfile.profilename%></a></span>
+                        | <span>Updated <%= TimeRanges.getCurrentFormattedDate%> <%= TimeRanges.getCurrentFormattedTime%> <%= TimeRanges.amOrpm%> IST </span>
                            </div>
                 </div>
             </div>
 
-            <%- finalHtmlContent%>
+            <%- processedContentNAMP%>
 
-                
-            <%- NormalFaq%>
                 
 
          
