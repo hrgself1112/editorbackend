@@ -42,7 +42,6 @@ const PostArticleRegister = async (req, res) => {
       const array1 = schemaProfile.path.split(",").map(item => item.trim())
       const array2 = schemaProfile.text.split(",").map(item => item.trim())
       
-      // Function to generate breadcrumb HTML for an array
       const generateBreadcrumbHTML = (array1, array2, title) => {
           const resultHTML = [];
           const className = 'BreadCrumb';
@@ -61,39 +60,38 @@ const PostArticleRegister = async (req, res) => {
       };
       
 
-const breadcrumbList = {
-  "@context": "https://schema.org/",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": array2[0],
-      "item": "https://www.astrosage.com"
-    },
-    ...array2.slice(1).map((name, index) => ({
-      "@type": "ListItem",
-      "position": index + 2,
-      "name": name,
-      "item": `https://www.astrosage.com/${array1.slice(0, index + 1).join('/')}`
-    })),
-    {
-      "@type": "ListItem",
-      "position": array2.length + 1,
-      "name": title,
-      "item": `https://www.astrosage.com/${array1.join('/')}/${url}`
-    }
-  ]
-};
+      const breadcrumbList = {
+        "@context": "https://schema.org/",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": array2[0],
+            "item": "https://www.astrosage.com"
+          },
+          ...array2.slice(1).map((name, index) => ({
+            "@type": "ListItem",
+            "position": index + 2,
+            "name": name,
+            "item": `https://www.astrosage.com/${array1.slice(0, index + 1).join('/')}`
+          })),
+          {
+            "@type": "ListItem",
+            "position": array2.length + 1,
+            "name": title,
+            "item": `https://www.astrosage.com/${array1.join('/')}/${url}`
+          }
+        ]
+      };
 
-const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(breadcrumbList)}</script>`;
-
-
-
+      const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(breadcrumbList)}</script>`;
 
       const breadcrumbHTML = generateBreadcrumbHTML(array1, array2, title);
       
-
+      const faqsnonamp = faq.trim() == "" ? "" : processedFaqNAMP 
+      const faqsamp = faq.trim() == "" ? "" : processedFaqAMP
+      
 
         const newUser = new ArticleRegistrationsModel({
             title: title,
@@ -110,8 +108,8 @@ const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(breadc
             if_not_lang: if_not_lang,
             processedContentNAMP: processedContentNAMP,
             processedContentAMP: processedContentAMP,
-            processedFaqNAMP: processedFaqNAMP,
-            processedFaqAMP: processedFaqAMP,
+            processedFaqNAMP: faqsnonamp,
+            processedFaqAMP: faqsamp,
             AuthorProfile: AuthorProfile,
             schemaProfile: schemaProfile,
 
@@ -127,8 +125,6 @@ const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(breadc
             newerPath:array1.join("/"),
             jsonLdScript:jsonLdScript,
         });
-
-
 
         // Save the user to the Rdatabase
         await newUser.save();
