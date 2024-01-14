@@ -7,7 +7,7 @@ const archiver = require("archiver")
 
 const ejs = require('ejs');
 const ArticleRegistrationsModel = require("../models/register");
-const { getCurrentFormattedNumberDate, getCurrentFormattedDate, getCurrentFormattedTime, getamOrpm } = require('../misc/date');
+let { getCurrentFormattedNumberDate, getCurrentFormattedDate, getCurrentFormattedTime, getamOrpm } = require('../misc/date');
 
 const GetRegisterArticle = async (req, res) => {
     const users = await ArticleRegistrationsModel.find()
@@ -38,10 +38,10 @@ const PostArticleRegister = async (req, res) => {
       const ResLineOne = `<% Response.Charset="utf-8" %>`
       const Ressession = `<% session("topmenulink")="horoscope" %>`
 
-      const getCurrentFormattedNumberDate = getCurrentFormattedNumberDate()
-      const getCurrentFormattedDate = getCurrentFormattedDate()
-      const getCurrentFormattedTime = getCurrentFormattedTime()
-      const getamOrpm = getamOrpm()
+      let getCurrentFormattedNumberDate = getCurrentFormattedNumberDate()
+      let getCurrentFormattedDate = getCurrentFormattedDate()
+      let getCurrentFormattedTime = getCurrentFormattedTime()
+      let getamOrpm = getamOrpm()
       
 
 
