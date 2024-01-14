@@ -37,7 +37,15 @@ const PostArticleRegister = async (req, res) => {
     try {
       const { title, description, keywords, url, h1, content, imageurl, imagealt, path, faq, faqlasttext, if_not_lang, processedContentNAMP, processedContentAMP, processedFaqNAMP, processedFaqAMP, AuthorProfile, schemaProfile } = req.body
       
-
+      // const array1 = [2, 3];
+      // const array2 = ['a', 'b', 'c'];
+      
+      // const resultObject = {};
+      
+      // array2.forEach((key, index) => {
+      //     resultObject[key] = index === 0 ? '/' : array1[index - 1];
+      // });
+      
 
 
         const newUser = new ArticleRegistrationsModel({

@@ -26,22 +26,47 @@ const getCurrentFormattedNumberDate = () => {
   
   };
   
-  const getCurrentFormattedTime = () => {
-    const currentDate = new Date();
-    let hours = currentDate.getHours();
-    const minutes = currentDate.getMinutes();
-    const seconds = currentDate.getSeconds(); // Added for seconds
+//   const getCurrentFormattedTime = () => {
+//     const currentDate = new Date();
+//     let hours = currentDate.getHours();
+//     const minutes = currentDate.getMinutes();
+//     const seconds = currentDate.getSeconds(); // Added for seconds
   
-    // Convert hours to 12-hour format
-    hours = hours % 12 || 12;
+//     // Convert hours to 12-hour format
+//     hours = hours % 12 || 12;
   
-    const formattedHours = hours.toString().padStart(2, '0');
-    const formattedMinutes = minutes.toString().padStart(2, '0');
-    const formattedSeconds = seconds.toString().padStart(2, '0'); // Formatted seconds
+//     const formattedHours = hours.toString().padStart(2, '0');
+//     const formattedMinutes = minutes.toString().padStart(2, '0');
+//     const formattedSeconds = seconds.toString().padStart(2, '0'); // Formatted seconds
   
-    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+//     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+// };
+
+
+const getCurrentFormattedTimeWithOffset = (offsetHours, offsetMinutes) => {
+  const currentDate = new Date();
+  
+  // Adjust the current date and time with the offset
+  currentDate.setHours(currentDate.getHours() + offsetHours);
+  currentDate.setMinutes(currentDate.getMinutes() + offsetMinutes);
+
+  let hours = currentDate.getHours();
+  const minutes = currentDate.getMinutes();
+  const seconds = currentDate.getSeconds();
+
+  // Convert hours to 12-hour format
+  hours = hours % 12 || 12;
+
+  const formattedHours = hours.toString().padStart(2, '0');
+  const formattedMinutes = minutes.toString().padStart(2, '0');
+  const formattedSeconds = seconds.toString().padStart(2, '0');
+
+  return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 };
 
+// Get the current time with a 5 hours 30 minutes offset
+const getCurrentFormattedTime = getCurrentFormattedTimeWithOffset(5, 30);
+// console.log(currentTimeWithOffset);
 
   const getamOrpm = () => {
     const currentDate = new Date();
