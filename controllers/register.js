@@ -16,7 +16,7 @@ const GetRegisterArticle = async (req, res) => {
 const GetRegisterArticlebyID = async (req, res) => {
     console.log(req.params.id)
     try {
-        const user = await ArticleRegistrationsModel.findById(req.params.id);
+        const user = await ArticleRegistrationsModel.find({ _id: { $in: req.params.id.split(",") } });
         if (user) {
             res.json(user);
         } else {
