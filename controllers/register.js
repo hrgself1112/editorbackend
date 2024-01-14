@@ -89,6 +89,7 @@ const DownloadRegisterArticlesByID = async (req, res) => {
     const ids  = req.params.id.split(",")
 
 console.log(ids);
+console.log(req.params);
 //   const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids } });
 
 //   const outputDirectory = path.join(__dirname, 'generatedFiles');
