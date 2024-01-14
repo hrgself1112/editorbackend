@@ -54,6 +54,8 @@ const PostArticleRegister = async (req, res) => {
             schemaProfil: schemaProfile
         });
 
+
+        
         // Save the user to the Rdatabase
         await newUser.save();
 
@@ -82,6 +84,7 @@ const DeleteRegisterArticlesByID = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 const DownloadRegisterArticlesByID = async (req, res) => {
   try {
     console.log(req.query.id);
