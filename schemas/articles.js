@@ -24,7 +24,9 @@ const ArticleSchema = mongoose.Schema({
   TimeRanges: { type: Object },
   ResLineOne: { type: String },
   Ressession: { type: String },
-  BreadCrumbs: { type: String }
+  BreadCrumbs: { type: String },
+  newerPath: { type: String },
+  jsonLdScript: { type: String }
 });
 
 
