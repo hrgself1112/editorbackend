@@ -85,27 +85,9 @@ const DeleteRegisterArticlesByID = async (req, res) => {
 
 
 const DownloadRegisterArticlesByID = async (req, res) => {
-  
 
-    // console.log(req.params.id)
-    // try {
-    //     const user = await ArticleRegistrationsModel.findById(req.params.id);
-    //     if (user) {
-    //         res.json(user);
-    //     } else {
-    //         res.status(404).json({ message: 'User not found' });
-    //     }
-    // } catch (error) {
-    //     console.error(error);
-    //     res.status(500).json({ error: 'Internal server error' });
-    // }
-
-//     const ids  = req.params.id.split(",")
-
-// console.log(ids);
-// console.log(req.params);
-
-  const jsonData = await ArticleRegistrationsModel.findById(req.params.id)
+    let ids = req.params.id.split(",")
+  const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids } });
 
   const outputDirectory = path.join(__dirname, 'generatedFiles');
   const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
