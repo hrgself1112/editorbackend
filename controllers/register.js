@@ -86,11 +86,13 @@ const DeleteRegisterArticlesByID = async (req, res) => {
 
 
 const DownloadRegisterArticlesByID = async (req, res) => {
-    let ids = req.params.id.split(",")
-// Convert string representations to actual ObjectId objects
-const objectIdArray = ids.map(id => new ObjectId(id));
+  console.log(req.query.id);
+  
+    let ids = req.query.id.split(",")
+// // Convert string representations to actual ObjectId objects
+// const objectIdArray = ids.map(id => new ObjectId(id));
     
-    const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: objectIdArray } });
+    const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids } });
 
   const outputDirectory = path.join(__dirname, 'generatedFiles');
   const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
