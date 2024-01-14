@@ -39,8 +39,8 @@ const PostArticleRegister = async (req, res) => {
       
 
 
-      const array1 = schemaProfile.path.split(",");
-      const array2 = schemaProfile.text.split(",");
+      const array1 = schemaProfile.path.split(",").map(item => item.trim())
+      const array2 = schemaProfile.text.split(",").map(item => item.trim())
       
       // Function to generate breadcrumb HTML for an array
       const generateBreadcrumbHTML = (array1, array2, title) => {
