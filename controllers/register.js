@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongodb');
 const express = require("express")
 const router = express.Router()
 const path  = require("path")
@@ -6,7 +5,8 @@ const fs  = require("fs")
 const archiver = require("archiver")
 
 const ejs = require('ejs');
-const ArticleRegistrationsModel = require("../models/register")
+const ArticleRegistrationsModel = require("../models/register");
+const mongoose = require('mongoose');
 
 const GetRegisterArticle = async (req, res) => {
     const users = await ArticleRegistrationsModel.find()
@@ -86,51 +86,51 @@ const DeleteRegisterArticlesByID = async (req, res) => {
 
 
 const DownloadRegisterArticlesByID = async (req, res) => {
-    try {
-      const ids = req.query.id.split(",");
-      const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids } });
-  
-      const outputDirectory = path.join(process.cwd(), 'generatedFiles');
-      const outputDirectoryAMP = path.join(outputDirectory, 'amp');
-  
-      await fs.promises.mkdir(outputDirectory, { recursive: true });
-      await fs.promises.mkdir(outputDirectoryAMP, { recursive: true });
-  
-      const archive = archiver('zip', {
-        zlib: { level: 9 }
-      });
-  
-      archive.on('error', (err) => {
-        res.status(500).send({ error: err.message });
-      });
-  
-      res.attachment('generatedFiles.zip');
-      archive.pipe(res);
-  
-      for (let i = 0; i < jsonData.length; i++) {
-        const data = jsonData[i];
-        const filename = data.url.replace(/[^\w\s.-]/gi, '');
-  
-        // Render the EJS template with data
-        const renderedHTML = await ejs.renderFile(path.join(process.cwd(), 'views/creation/template.ejs'), data);
-        const renderedHTMLAMP = await ejs.renderFile(path.join(process.cwd(), 'views/creation/amptemplate.ejs'), data);
-  
-        // Write the rendered HTML content to ASP files with the correct extension
-        await fs.promises.writeFile(path.join(outputDirectory, `${filename}.asp`), renderedHTML);
-        await fs.promises.writeFile(path.join(outputDirectoryAMP, `${filename}.asp`), renderedHTMLAMP);
-  
-        // Add ASP files to the ZIP archive
-        archive.file(path.join(outputDirectory, `${filename}.asp`), { name: `generatedFiles/${filename}` });
-        archive.file(path.join(outputDirectoryAMP, `${filename}.asp`), { name: `generatedFiles/amp/${filename}` });
-      }
-  
-      archive.finalize();
-    } catch (error) {
-      console.error(error);
-      res.status(500).send({ error: 'Internal server error' });
+  try {
+    const ids = req.query.id.split(",");
+    const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids.map(id => mongoose.Types.ObjectId(id)) } });
+
+    const outputDirectory = path.join(process.cwd(), 'generatedFiles');
+    const outputDirectoryAMP = path.join(outputDirectory, 'amp');
+
+    await fs.promises.mkdir(outputDirectory, { recursive: true });
+    await fs.promises.mkdir(outputDirectoryAMP, { recursive: true });
+
+    const archive = archiver('zip', {
+      zlib: { level: 9 }
+    });
+
+    archive.on('error', (err) => {
+      res.status(500).send({ error: err.message });
+    });
+
+    res.attachment('generatedFiles.zip');
+    archive.pipe(res);
+
+    for (let i = 0; i < jsonData.length; i++) {
+      const data = jsonData[i];
+      const filename = data.url.replace(/[^\w\s.-]/gi, '');
+
+      // Render the EJS template with data
+      const renderedHTML = await ejs.renderFile(path.join(process.cwd(), 'views/creation/template.ejs'), data);
+      const renderedHTMLAMP = await ejs.renderFile(path.join(process.cwd(), 'views/creation/amptemplate.ejs'), data);
+
+      // Write the rendered HTML content to ASP files with the correct extension
+      await fs.promises.writeFile(path.join(outputDirectory, `${filename}.asp`), renderedHTML);
+      await fs.promises.writeFile(path.join(outputDirectoryAMP, `${filename}.asp`), renderedHTMLAMP);
+
+      // Add ASP files to the ZIP archive
+      archive.file(path.join(outputDirectory, `${filename}.asp`), { name: `generatedFiles/${filename}` });
+      archive.file(path.join(outputDirectoryAMP, `${filename}.asp`), { name: `generatedFiles/amp/${filename}` });
     }
-  };
-  
+
+    archive.finalize();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'Internal server error' });
+  }
+};
+
 
 module.exports = {
     PostArticleRegister, GetRegisterArticle , GetRegisterArticlebyID , DeleteRegisterArticlesByID,DownloadRegisterArticlesByID
