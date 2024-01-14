@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const express = require("express")
 const router = express.Router()
 const path  = require("path")
@@ -85,9 +86,11 @@ const DeleteRegisterArticlesByID = async (req, res) => {
 
 
 const DownloadRegisterArticlesByID = async (req, res) => {
-
     let ids = req.params.id.split(",")
-  const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids } });
+// Convert string representations to actual ObjectId objects
+const objectIdArray = ids.map(id => new ObjectId(id));
+    
+    const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: objectIdArray } });
 
   const outputDirectory = path.join(__dirname, 'generatedFiles');
   const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
