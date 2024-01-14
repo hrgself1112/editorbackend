@@ -67,6 +67,11 @@
 
                 
 
+            <% if (faq.trim() == "") { %>
+                ""
+            <% } else { %>
+                <%- processedFaqNAMP%>
+            <% } %>
          
         </div>
     </div>
