@@ -92,7 +92,7 @@ const DownloadRegisterArticlesByID = async (req, res) => {
 // // Convert string representations to actual ObjectId objects
 // const objectIdArray = ids.map(id => new ObjectId(id));
     
-    const jsonData = await ArticleRegistrationsModel.find({ _id: { $in:"65a3965f46d123fe947f2218" } });
+    const jsonData = await ArticleRegistrationsModel.find({ _id: ObjectId("65a3965f46d123fe947f2218")});
 
   const outputDirectory = path.join(__dirname, 'generatedFiles');
   const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
