@@ -89,52 +89,52 @@ const DownloadRegisterArticlesByID = async (req, res) => {
     const ids  = req.params.id.split(",")
 
 console.log(ids);
-  const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids } });
+//   const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids } });
 
-  const outputDirectory = path.join(__dirname, 'generatedFiles');
-  const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
+//   const outputDirectory = path.join(__dirname, 'generatedFiles');
+//   const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
 
-  if (!fs.existsSync(outputDirectory)) {
-    fs.mkdirSync(outputDirectory, { recursive: true });
-  }
+//   if (!fs.existsSync(outputDirectory)) {
+//     fs.mkdirSync(outputDirectory, { recursive: true });
+//   }
 
-  if (!fs.existsSync(outputDirectoryAMP)) {
-    fs.mkdirSync(outputDirectoryAMP, { recursive: true });
-  }
+//   if (!fs.existsSync(outputDirectoryAMP)) {
+//     fs.mkdirSync(outputDirectoryAMP, { recursive: true });
+//   }
 
-  const archive = archiver('zip', {
-    zlib: { level: 9 }
-  });
+//   const archive = archiver('zip', {
+//     zlib: { level: 9 }
+//   });
 
-  archive.on('error', (err) => {
-    res.status(500).send({ error: err.message });
-  });
+//   archive.on('error', (err) => {
+//     res.status(500).send({ error: err.message });
+//   });
 
-  res.attachment('generatedFiles.zip');
-  archive.pipe(res);
+//   res.attachment('generatedFiles.zip');
+//   archive.pipe(res);
 
-  for (let i = 0; i < jsonData.length; i++) {
+//   for (let i = 0; i < jsonData.length; i++) {
 
-    const data = jsonData[i];
+//     const data = jsonData[i];
     
-    console.log(data)
+//     console.log(data)
     
-    const filename = data.url.replace(/[^\w\s.-]/gi, '');
+//     const filename = data.url.replace(/[^\w\s.-]/gi, '');
 
-    // Render the EJS template with data
-    const renderedHTML = await ejs.renderFile(path.join(__dirname, '../views/creation/template.ejs'), data);
-    const renderedHTMLAMP = await ejs.renderFile(path.join(__dirname, '../views/creation/amptemplate.ejs'), data);
+//     // Render the EJS template with data
+//     const renderedHTML = await ejs.renderFile(path.join(__dirname, '../views/creation/template.ejs'), data);
+//     const renderedHTMLAMP = await ejs.renderFile(path.join(__dirname, '../views/creation/amptemplate.ejs'), data);
 
-    // Write the rendered HTML content to ASP files with the correct extension
-    fs.writeFileSync(path.join(outputDirectory, `${filename}.asp`), renderedHTML);
-    fs.writeFileSync(path.join(outputDirectoryAMP, `${filename}.asp`), renderedHTMLAMP);
+//     // Write the rendered HTML content to ASP files with the correct extension
+//     fs.writeFileSync(path.join(outputDirectory, `${filename}.asp`), renderedHTML);
+//     fs.writeFileSync(path.join(outputDirectoryAMP, `${filename}.asp`), renderedHTMLAMP);
 
-    // Add ASP files to the ZIP archive
-    archive.file(path.join(outputDirectory, `${filename}.asp`), { name: `generatedFiles/${filename}` });
-    archive.file(path.join(outputDirectoryAMP, `${filename}.asp`), { name: `generatedFiles/amp/${filename}` });
-  }
+//     // Add ASP files to the ZIP archive
+//     archive.file(path.join(outputDirectory, `${filename}.asp`), { name: `generatedFiles/${filename}` });
+//     archive.file(path.join(outputDirectoryAMP, `${filename}.asp`), { name: `generatedFiles/amp/${filename}` });
+//   }
 
-  archive.finalize();
+//   archive.finalize();
 };
 
 
