@@ -82,60 +82,60 @@ const DeleteRegisterArticlesByID = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
-
 const DownloadRegisterArticlesByID = async (req, res) => {
-    try {
-      console.log(req.query.id);
-    
-      let ids = req.query.id.split(",");
-      const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids } });
-  
-      const outputDirectory = path.join(__dirname, 'generatedFiles');
-      const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
-  
-      if (!fs.existsSync(outputDirectory)) {
-        fs.mkdirSync(outputDirectory, { recursive: true });
-      }
-  
-      if (!fs.existsSync(outputDirectoryAMP)) {
-        fs.mkdirSync(outputDirectoryAMP, { recursive: true });
-      }
-  
-      const archive = archiver('zip', {
-        zlib: { level: 9 }
-      });
-  
-      archive.on('error', (err) => {
-        res.status(500).send({ error: err.message });
-      });
-  
-      res.attachment('generatedFiles.zip');
-      archive.pipe(res);
-  
-      for (let i = 0; i < jsonData.length; i++) {
-        const data = jsonData[i];
-        console.log(data);
-        const filename = data.url.replace(/[^\w\s.-]/gi, '');
-  
-        // Render the EJS template with data
-        const renderedHTML = await ejs.renderFile(path.join(__dirname, '../views/creation/template.ejs'), data);
-        const renderedHTMLAMP = await ejs.renderFile(path.join(__dirname, '../views/creation/amptemplate.ejs'), data);
-  
-        // Write the rendered HTML content to ASP files with the correct extension
-        fs.writeFileSync(path.join(outputDirectory, `${filename}.asp`), renderedHTML);
-        fs.writeFileSync(path.join(outputDirectoryAMP, `${filename}.asp`), renderedHTMLAMP);
-  
-        // Add ASP files to the ZIP archive
-        archive.file(path.join(outputDirectory, `${filename}.asp`), { name: `generatedFiles/${filename}` });
-        archive.file(path.join(outputDirectoryAMP, `${filename}.asp`), { name: `generatedFiles/amp/${filename}` });
-      }
-  
-      archive.finalize();
-    } catch (error) {
-      console.error(error);
-      res.status(500).send({ error: 'Internal server error' });
+  try {
+    console.log(req.query.id);
+
+    let ids = req.query.id.split(",");
+    const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids } });
+
+    const outputDirectory = '/tmp/generatedFiles';
+    const outputDirectoryAMP = '/tmp/generatedFiles/amp';
+
+    if (!fs.existsSync(outputDirectory)) {
+      fs.mkdirSync(outputDirectory, { recursive: true });
     }
-  };
+
+    if (!fs.existsSync(outputDirectoryAMP)) {
+      fs.mkdirSync(outputDirectoryAMP, { recursive: true });
+    }
+
+    const archive = archiver('zip', {
+      zlib: { level: 9 }
+    });
+
+    archive.on('error', (err) => {
+      res.status(500).send({ error: err.message });
+    });
+
+    res.attachment('generatedFiles.zip');
+    archive.pipe(res);
+
+    for (let i = 0; i < jsonData.length; i++) {
+      const data = jsonData[i];
+      console.log(data);
+      const filename = data.url.replace(/[^\w\s.-]/gi, '');
+
+      // Render the EJS template with data
+      const renderedHTML = await ejs.renderFile(path.join(__dirname, '../views/creation/template.ejs'), data);
+      const renderedHTMLAMP = await ejs.renderFile(path.join(__dirname, '../views/creation/amptemplate.ejs'), data);
+
+      // Write the rendered HTML content to ASP files with the correct extension
+      fs.writeFileSync(path.join(outputDirectory, `${filename}.asp`), renderedHTML);
+      fs.writeFileSync(path.join(outputDirectoryAMP, `${filename}.asp`), renderedHTMLAMP);
+
+      // Add ASP files to the ZIP archive
+      archive.file(path.join(outputDirectory, `${filename}.asp`), { name: `generatedFiles/${filename}` });
+      archive.file(path.join(outputDirectoryAMP, `${filename}.asp`), { name: `generatedFiles/amp/${filename}` });
+    }
+
+    archive.finalize();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'Internal server error' });
+  }
+};
+
   
 module.exports = {
     PostArticleRegister, GetRegisterArticle , GetRegisterArticlebyID , DeleteRegisterArticlesByID,DownloadRegisterArticlesByID
