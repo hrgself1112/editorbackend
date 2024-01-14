@@ -37,14 +37,30 @@ const PostArticleRegister = async (req, res) => {
     try {
       const { title, description, keywords, url, h1, content, imageurl, imagealt, path, faq, faqlasttext, if_not_lang, processedContentNAMP, processedContentAMP, processedFaqNAMP, processedFaqAMP, AuthorProfile, schemaProfile } = req.body
       
-      // const array1 = [2, 3];
-      // const array2 = ['a', 'b', 'c'];
+
+
+      const array1 = schemaProfile.path.split(",");
+      const array2 = schemaProfile.text.split(",");
       
-      // const resultObject = {};
+      // Function to generate breadcrumb HTML for an array
+      const generateBreadcrumbHTML = (array1, array2, title) => {
+          const resultHTML = [];
+          const className = 'BreadCrumb';
       
-      // array2.forEach((key, index) => {
-      //     resultObject[key] = index === 0 ? '/' : array1[index - 1];
-      // });
+          for (let i = 0; i < array2.length; i++) {
+              const href = i === 0 ? '/' : `/${array1.slice(0, i).join('/')}`;
+              const currentTitle = array2[i];
+      
+              resultHTML.push(`<a href="${href}" title="${currentTitle}" class="${className}">${currentTitle}</a> ${i < array2.length - 1 ? '&#187;' : ''}`);
+          }
+      
+          // Add the title breadcrumb without '&#187;' at the end
+          resultHTML.push(`<a href="#" title="${title}" class="${className}">${title}</a>`);
+      
+          return resultHTML.join(' ');
+      };
+      
+      const breadcrumbHTML = generateBreadcrumbHTML(array1, array2, title);
       
 
 
@@ -74,9 +90,9 @@ const PostArticleRegister = async (req, res) => {
               getCurrentFormattedNumberDate:getCurrentFormattedNumberDate(),
               getCurrentFormattedDate:getCurrentFormattedDate(),
               getCurrentFormattedTime:getCurrentFormattedTime(),
-              getamOrpm:getamOrpm()}
-
-
+              getamOrpm:getamOrpm()
+            },
+            BreadCrumbs:breadcrumbHTML
         });
 
 

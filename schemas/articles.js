@@ -23,7 +23,8 @@ const ArticleSchema = mongoose.Schema({
   schemaProfile: { type: Object },
   TimeRanges: { type: Object },
   ResLineOne: { type: String },
-  Ressession: { type: String }
+  Ressession: { type: String },
+  BreadCrumbs: { type: String }
 });
 
 
