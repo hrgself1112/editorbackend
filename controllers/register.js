@@ -88,7 +88,7 @@ const DeleteRegisterArticlesByID = async (req, res) => {
 const DownloadRegisterArticlesByID = async (req, res) => {
   console.log(req.query.id);
   
-    let ids = req.query.id.split(",")
+    let ids = await req.query.id.split(",")
 // // Convert string representations to actual ObjectId objects
 // const objectIdArray = ids.map(id => new ObjectId(id));
     
