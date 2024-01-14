@@ -88,7 +88,7 @@ const DeleteRegisterArticlesByID = async (req, res) => {
 const DownloadRegisterArticlesByID = async (req, res) => {
   try {
     const ids = req.query.id.split(",");
-    const jsonData = await ArticleRegistrationsModel.find({ _id: { $in: ids.map(id => mongoose.Types.ObjectId(id)) } });
+    const jsonData = await ArticleRegistrationsModel.findById("65a3abf7c08b68407e631c8f");
 
     const outputDirectory = path.join(process.cwd(), 'generatedFiles');
     const outputDirectoryAMP = path.join(outputDirectory, 'amp');
