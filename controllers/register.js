@@ -13,7 +13,7 @@ const GetRegisterArticle = async (req, res) => {
 }
 
 const GetRegisterArticlebyID = async (req, res) => {
-    
+    console.log(req.params.id)
     try {
         const user = await ArticleRegistrationsModel.findById(req.params.id);
         if (user) {
