@@ -34,10 +34,6 @@ const PostArticleRegister = async (req, res) => {
   const ResLineOne = `<% Response.Charset="utf-8" %>`
   const Ressession = `<% session("topmenulink")="horoscope" %>`
   
-  let getCurrentFormattedNumberDate =  await getCurrentFormattedNumberDate()
-  let getCurrentFormattedDate =  await getCurrentFormattedDate()
-  let getCurrentFormattedTime =  await getCurrentFormattedTime()
-  let getamOrpm =  await getamOrpm()
   
     try {
       const { title, description, keywords, url, h1, content, imageurl, imagealt, path, faq, faqlasttext, if_not_lang, processedContentNAMP, processedContentAMP, processedFaqNAMP, processedFaqAMP, AuthorProfile, schemaProfile } = req.body
@@ -67,7 +63,6 @@ const PostArticleRegister = async (req, res) => {
 
             ResLineOne:ResLineOne,
             Ressession:Ressession, 
-            TimeRanges:{getCurrentFormattedNumberDate,getCurrentFormattedDate,getCurrentFormattedTime,getamOrpm}
 
         });
 
