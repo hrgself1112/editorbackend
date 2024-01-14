@@ -30,15 +30,19 @@ const getCurrentFormattedNumberDate = () => {
     const currentDate = new Date();
     let hours = currentDate.getHours();
     const minutes = currentDate.getMinutes();
+    const seconds = currentDate.getSeconds(); // Added for seconds
   
     // Convert hours to 12-hour format
     hours = hours % 12 || 12;
   
     const formattedHours = hours.toString().padStart(2, '0');
     const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = seconds.toString().padStart(2, '0'); // Formatted seconds
   
-    return `${formattedHours}:${formattedMinutes}`;
-  };
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+};
+
+
   const getamOrpm = () => {
     const currentDate = new Date();
     const hours = currentDate.getHours().toString().padStart(2, '0');
@@ -46,11 +50,6 @@ const getCurrentFormattedNumberDate = () => {
     return `${amOrPm}`;
   };
   
-// console.log(getCurrentFormattedNumberDate());
-// console.log(getCurrentFormattedDate());
-// console.log(getCurrentFormattedTime());
-// console.log(getamOrpm());
-
   module.exports = {
     getCurrentFormattedDate,
     getCurrentFormattedTime,
