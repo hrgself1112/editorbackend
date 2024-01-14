@@ -60,6 +60,37 @@ const PostArticleRegister = async (req, res) => {
           return resultHTML.join(' ');
       };
       
+
+const breadcrumbList = {
+  "@context": "https://schema.org/",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": array2[0],
+      "item": "https://www.astrosage.com"
+    },
+    ...array2.slice(1).map((name, index) => ({
+      "@type": "ListItem",
+      "position": index + 2,
+      "name": name,
+      "item": `https://www.astrosage.com/${array1.slice(0, index + 1).join('/')}`
+    })),
+    {
+      "@type": "ListItem",
+      "position": array2.length + 1,
+      "name": title,
+      "item": `https://www.astrosage.com/${array1.join('/')}/${url}`
+    }
+  ]
+};
+
+const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(breadcrumbList)}</script>`;
+
+
+
+
       const breadcrumbHTML = generateBreadcrumbHTML(array1, array2, title);
       
 
@@ -92,7 +123,9 @@ const PostArticleRegister = async (req, res) => {
               getCurrentFormattedTime:getCurrentFormattedTime(),
               getamOrpm:getamOrpm()
             },
-            BreadCrumbs:breadcrumbHTML
+            BreadCrumbs:breadcrumbHTML,
+            newerPath:array1.join("/"),
+            jsonLdScript:jsonLdScript,
         });
 
 

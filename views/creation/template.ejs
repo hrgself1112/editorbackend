@@ -3,10 +3,11 @@
 <html>
 <head>
     <!--#include virtual="/include/topmeta.asp"-->
-    <link rel="amphtml" href="https://www.astrosage.com/<%= whichYear%>/amp/<%= url%>">
-    <title><%= title %></title><%- keywords%>
+    <link rel="amphtml" href="https://www.astrosage.com/<%= newerPath%>/amp/<%= url%>">
+    <title><%= title %></title>
+    <meta name="keywords" content="<%= keywords%>" />
     <meta name="description" content="<%= description %>" />
-    <script type="application/ld+json">{"@context": "https://schema.org/","@type": "BreadcrumbList","itemListElement": [{"@type":"ListItem", "position": 1,"name":"Home","item":"https://www.astrosage.com/" },{"@type":"ListItem", "position": 2,"name":"<%= whichYear%>","item":"https://www.astrosage.com/<%= whichYear%>/" },{"@type":"ListItem", "position": 3,"name":"<%= title %>","item":"https://www.astrosage.com/<%= whichYear%>/<%= url%>" }]}</script>
+   <%= jsonLdScript%>
     <script type="application/ld+json">
     {
     "@context":"https://schema.org",
