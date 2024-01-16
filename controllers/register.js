@@ -13,6 +13,12 @@ const GetRegisterArticle = async (req, res) => {
     const users = await ArticleRegistrationsModel.find()
     res.json(users);
 }
+const GetRegisterArticleltd = async (req, res) => {
+  const twoDaysAgo = new Date();
+  twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    const users = await ArticleRegistrationsModel.find({ createdAt: { $gte: twoDaysAgo } })
+    res.json(users);
+}
 
 const GetRegisterArticlebyID = async (req, res) => {
     console.log(req.params.id)
@@ -211,7 +217,7 @@ const DownloadRegisterArticlesByID = async (req, res) => {
 
   
 module.exports = {
-    PostArticleRegister, GetRegisterArticle , GetRegisterArticlebyID , DeleteRegisterArticlesByID,DownloadRegisterArticlesByID
+    PostArticleRegister, GetRegisterArticleltd, GetRegisterArticle , GetRegisterArticlebyID , DeleteRegisterArticlesByID,DownloadRegisterArticlesByID
 }
 
 
