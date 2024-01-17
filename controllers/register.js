@@ -13,29 +13,33 @@ const GetRegisterArticle = async (req, res) => {
     const users = await ArticleRegistrationsModel.find()
     res.json(users);
 }
-const GetRegisterArticleltd = async (req, res) => {
+
+const GetRegisterArticlelast = async (req, res) => {
   try {
-  const currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0); // Start of today (midnight)
-  
-  const twoDaysAgo = new Date(currentDate);
-  twoDaysAgo.setDate(currentDate.getDate() - 2);
-  twoDaysAgo.setHours(0, 0, 0, 0); // Start of two days ago (midnight)
-  
-  console.log("Start Date:", twoDaysAgo);
-  console.log("End Date:", currentDate);
-  
-    const users = await ArticleRegistrationsModel.find({
-      createdAt:{$gte:currentDate,$lte:twoDaysAgo}
-    });
-    
-    console.log("Found Users:", users);
-    res.json(users)
-    
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Start of today (midnight)
+
+    const twoDaysAgo = new Date(currentDate);
+    twoDaysAgo.setDate(currentDate.getDate() - 2);
+    twoDaysAgo.setHours(0, 0, 0, 0); // Start of two days ago (midnight)
+
+    console.log("Start Date:", twoDaysAgo);
+    console.log("End Date:", currentDate);
+
+    let query = {};
+
+    // Check if a specific query parameter is present to apply date range
+    if (req.query.applyDateRange === 'true') {
+      query.createdAt = { $gte: twoDaysAgo, $lte: currentDate };
+    }
+
+    const articles = await ArticleRegistrationsModel.find(query);
+
+    console.log("Found Articles:", articles);
+    res.json(articles);
   } catch (error) {
-    console.log("Found Users:", error);
-    res.status(500).json({ error: 'Error fetching data' })
-    
+    console.log("Error fetching data:", error);
+    res.status(500).json({ error: 'Error fetching data' });
   }
   }
 
@@ -236,7 +240,7 @@ const DownloadRegisterArticlesByID = async (req, res) => {
 
   
 module.exports = {
-    PostArticleRegister, GetRegisterArticleltd, GetRegisterArticle , GetRegisterArticlebyID , DeleteRegisterArticlesByID,DownloadRegisterArticlesByID
+    PostArticleRegister, GetRegisterArticlelast, GetRegisterArticle , GetRegisterArticlebyID , DeleteRegisterArticlesByID,DownloadRegisterArticlesByID
 }
 
 
