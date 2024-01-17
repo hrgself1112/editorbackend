@@ -14,11 +14,30 @@ const GetRegisterArticle = async (req, res) => {
     res.json(users);
 }
 const GetRegisterArticleltd = async (req, res) => {
-  const twoDaysAgo = new Date();
-  twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-    const users = await ArticleRegistrationsModel.find({ createdAt: { $gte: twoDaysAgo } })
-    res.json(users);
-}
+  try {
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0); // Start of today (midnight)
+  
+  const twoDaysAgo = new Date(currentDate);
+  twoDaysAgo.setDate(currentDate.getDate() - 2);
+  twoDaysAgo.setHours(0, 0, 0, 0); // Start of two days ago (midnight)
+  
+  console.log("Start Date:", twoDaysAgo);
+  console.log("End Date:", currentDate);
+  
+    const users = await ArticleRegistrationsModel.find({
+      createdAt:{$gte:currentDate,$lte:twoDaysAgo}
+    });
+    
+    console.log("Found Users:", users);
+    res.json(users)
+    
+  } catch (error) {
+    console.log("Found Users:", error);
+    res.status(500).json({ error: 'Error fetching data' })
+    
+  }
+  }
 
 const GetRegisterArticlebyID = async (req, res) => {
     console.log(req.params.id)

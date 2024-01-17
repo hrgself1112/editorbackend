@@ -27,7 +27,10 @@ const ArticleSchema = mongoose.Schema({
   BreadCrumbs: { type: String },
   newerPath: { type: String },
   jsonLdScript: { type: String }
-});
+},
+{
+    timestamps:true
+})
 
 
 // Export the ArticleRegistrationsSchema model

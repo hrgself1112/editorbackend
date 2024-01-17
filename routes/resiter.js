@@ -6,7 +6,7 @@ const { GetRegisterArticle, GetRegisterArticleltd, PostArticleRegister , GetRegi
 
 
 router.get("/" ,  GetRegisterArticle)
-router.get("/lasttwodays" ,  GetRegisterArticleltd)
+router.get("/lastwodays" ,  GetRegisterArticleltd)
 router.get("/:id" ,  GetRegisterArticlebyID)
 router.get("/download/:id" ,  DownloadRegisterArticlesByID)
 router.post("/" ,  PostArticleRegister)
