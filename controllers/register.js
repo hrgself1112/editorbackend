@@ -20,7 +20,7 @@ const GetRegisterArticlelast = async (req, res) => {
     currentDate.setHours(0, 0, 0, 0); // Start of today (midnight)
 
     const twoDaysAgo = new Date(currentDate);
-    twoDaysAgo.setDate(currentDate.getDate() - 2);
+    twoDaysAgo.setDate(currentDate.getDate() - 1);
     twoDaysAgo.setHours(0, 0, 0, 0); // Start of two days ago (midnight)
 
     console.log("Start Date:", twoDaysAgo);
