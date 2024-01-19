@@ -7,6 +7,7 @@ require("dotenv").config()
 const registerRouter = require("./routes/resiter");
 const bymongoose = require('./db-connectors/bymonngoose');
 const port = process.env.PORT
+const serverless = require("serverless-http")
 
 bymongoose()
 
@@ -33,3 +34,6 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Express.js backend is listening on port ${port}`);
 });
+
+
+module.exports.handler=serverless(app)
