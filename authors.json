@@ -106,6 +106,14 @@
       "profileUrl": "https://horoscope.astrosage.com/author-astroguru-mragaank/",
       "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2019/07/mragaank.jpg"
     },
+    "Charulata": {
+      "uniqueFindingKey": "searchCharulata",
+      "uniqueKey": "Charulata",
+      "searchCharulata": true,
+      "profilename": "Charu Lata",
+      "profileUrl": "#",
+      "profileImageUrl": "#"
+    },
     "Hariharan": {
       "uniqueFindingKey": "searchHariharan",
       "uniqueKey": "Hariharan",
