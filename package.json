@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/hrgself1112/editorbackend#readme",
   "dependencies": {
+    "@netlify/functions": "^2.5.1",
     "archiver": "^6.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -27,6 +28,7 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.4",
     "nodemon": "^3.0.2",
+    "serverless-http": "^3.2.0",
     "uuidv4": "^6.2.13"
   }
 }
